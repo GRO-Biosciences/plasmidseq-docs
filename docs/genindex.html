@@ -18,6 +18,18 @@
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="_static/copybutton.js?v=6dbb43f8"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+      <script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
+
+var loader_info = {name: 'logos', loader: () => fetch('https://unpkg.com/@iconify-json/logos@1/icons.json').then((res) => res.json())}
+mermaid.registerIconPacks([loader_info]);
+
+window.addEventListener("load", () => mermaid.run());
+</script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -42,8 +54,13 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Module Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="aws.html">AWS Configuration</a></li>
+</ul>
+
         </div>
       </div>
     </nav>
@@ -71,8 +88,249 @@
 <h1 id="index">Index</h1>
 
 <div class="genindex-jumpbox">
+ <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#W"><strong>W</strong></a>
  
 </div>
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pydantic.html#db_model.PlasmidSeqRun.assemblies">assemblies (db_model.PlasmidSeqRun attribute)</a>
+</li>
+      <li><a href="python/pydantic.html#db_model.AssemblyFeature.assembly">assembly (db_model.AssemblyFeature attribute)</a>
+</li>
+      <li><a href="python/pydantic.html#db_model.PlasmidSeqRun.assembly_count">assembly_count (db_model.PlasmidSeqRun attribute)</a>
+</li>
+      <li><a href="python/pydantic.html#db_model.PlasmidSeqRun.assembly_coverage_mean">assembly_coverage_mean (db_model.PlasmidSeqRun attribute)</a>
+</li>
+      <li><a href="python/pydantic.html#db_model.PlasmidSeqRun.assembly_coverage_std">assembly_coverage_std (db_model.PlasmidSeqRun attribute)</a>
+</li>
+      <li><a href="python/pydantic.html#db_model.AssemblyFeature.assembly_feature_name">assembly_feature_name (db_model.AssemblyFeature attribute)</a>
+</li>
+      <li><a href="python/pydantic.html#db_model.PlasmidSeqAssembly.assembly_gb">assembly_gb (db_model.PlasmidSeqAssembly property)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pydantic.html#db_model.AssemblyFeature.assembly_id">assembly_id (db_model.AssemblyFeature attribute)</a>
+
+      <ul>
+        <li><a href="python/pydantic.html#db_model.AssemblyPolymorphism.assembly_id">(db_model.AssemblyPolymorphism attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="python/pydantic.html#db_model.PlasmidSeqAssembly.assembly_name">assembly_name (db_model.PlasmidSeqAssembly attribute)</a>
+</li>
+      <li><a href="python/pydantic.html#db_model.AssemblyPolymorphism.assembly_nt_end">assembly_nt_end (db_model.AssemblyPolymorphism attribute)</a>
+</li>
+      <li><a href="python/pydantic.html#db_model.AssemblyPolymorphism.assembly_nt_start">assembly_nt_start (db_model.AssemblyPolymorphism attribute)</a>
+</li>
+      <li><a href="python/pydantic.html#db_model.AssemblyFeature">AssemblyFeature (class in db_model)</a>
+</li>
+      <li><a href="python/pydantic.html#db_model.AssemblyPolymorphism">AssemblyPolymorphism (class in db_model)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pydantic.html#db_model.PlasmidSeqRun.basespace_href">basespace_href (db_model.PlasmidSeqRun attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pydantic.html#db_model.MapStatusInfo.Cause">Cause (db_model.MapStatusInfo attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pydantic.html#db_model.AssemblyPolymorphism.cds_effect">cds_effect (db_model.AssemblyPolymorphism attribute)</a>
+</li>
+      <li><a href="python/pydantic.html#db_model.PlasmidSeqAssembly.contig_path">contig_path (db_model.PlasmidSeqAssembly attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pydantic.html#db_model.PlasmidSeqRun.data_id">data_id (db_model.PlasmidSeqRun attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pydantic.html#db_model.PlasmidSeqRun.data_path">data_path() (db_model.PlasmidSeqRun method)</a>
+</li>
+      <li><a href="python/pydantic.html#db_model.AssemblyFeature.deleted">deleted (db_model.AssemblyFeature attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pydantic.html#db_model.MapStatusInfo.Error">Error (db_model.MapStatusInfo attribute)</a>
+</li>
+      <li><a href="python/pydantic.html#db_model.PlasmidSeqRun.error_message">error_message (db_model.PlasmidSeqRun attribute)</a>
+</li>
+      <li><a href="python/pydantic.html#db_model.PlasmidSeqRun.error_path">error_path (db_model.PlasmidSeqRun attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pydantic.html#db_model.PlasmidSeqRun.error_type">error_type (db_model.PlasmidSeqRun attribute)</a>
+</li>
+      <li><a href="python/pydantic.html#db_model.PlasmidSeqRun.experiment_id">experiment_id (db_model.PlasmidSeqRun attribute)</a>
+</li>
+      <li><a href="python/pydantic.html#db_model.ExperimentStartModel">ExperimentStartModel (class in db_model)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pydantic.html#db_model.AssemblyFeature.feature_type">feature_type (db_model.AssemblyFeature attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pydantic.html#db_model.AssemblyFeature.frameshift_residue">frameshift_residue (db_model.AssemblyFeature attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pydantic.html#db_model.AssemblyFeature.id">id (db_model.AssemblyFeature attribute)</a>
+
+      <ul>
+        <li><a href="python/pydantic.html#db_model.AssemblyPolymorphism.id">(db_model.AssemblyPolymorphism attribute)</a>
+</li>
+        <li><a href="python/pydantic.html#db_model.PlasmidSeqAssembly.id">(db_model.PlasmidSeqAssembly attribute)</a>
+</li>
+        <li><a href="python/pydantic.html#db_model.PlasmidSeqRun.id">(db_model.PlasmidSeqRun attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pydantic.html#db_model.LambdaMixin.lambda_json">lambda_json() (db_model.LambdaMixin method)</a>
+</li>
+      <li><a href="python/pydantic.html#db_model.LambdaMixin">LambdaMixin (class in db_model)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pydantic.html#db_model.PlasmidSeqRun.last_step">last_step (db_model.PlasmidSeqRun attribute)</a>
+</li>
+      <li><a href="python/pydantic.html#db_model.PlasmidSeqAssembly.length">length (db_model.PlasmidSeqAssembly attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pydantic.html#db_model.MapStatusInfo">MapStatusInfo (class in db_model)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pydantic.html#db_model.PlasmidSeqAssembly.min_prevalence">min_prevalence (db_model.PlasmidSeqAssembly attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pydantic.html#db_model.ExperimentStartModel.name">name (db_model.ExperimentStartModel attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pydantic.html#db_model.PlasmidSeqAssembly">PlasmidSeqAssembly (class in db_model)</a>
+</li>
+      <li><a href="python/pydantic.html#db_model.PlasmidSeqRun">PlasmidSeqRun (class in db_model)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pydantic.html#db_model.PlasmidSeqRunList">PlasmidSeqRunList (class in db_model)</a>
+</li>
+      <li><a href="python/pydantic.html#db_model.AssemblyPolymorphism.poly_type">poly_type (db_model.AssemblyPolymorphism attribute)</a>
+</li>
+      <li><a href="python/pydantic.html#db_model.AssemblyFeature.polymorphisms">polymorphisms (db_model.AssemblyFeature attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pydantic.html#db_model.PlasmidSeqAssembly.run_id">run_id (db_model.PlasmidSeqAssembly attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pydantic.html#db_model.MapStatusInfo.RunID">RunID (db_model.MapStatusInfo attribute)</a>
+</li>
+      <li><a href="python/pydantic.html#db_model.PlasmidSeqRunList.runs">runs (db_model.PlasmidSeqRunList attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pydantic.html#db_model.PlasmidSeqRun.strip_template_name">strip_template_name() (db_model.PlasmidSeqRun class method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pydantic.html#db_model.PlasmidSeqRun.template_gb">template_gb (db_model.PlasmidSeqRun property)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pydantic.html#db_model.PlasmidSeqRun.template_length">template_length (db_model.PlasmidSeqRun attribute)</a>
+</li>
+      <li><a href="python/pydantic.html#db_model.PlasmidSeqRun.template_name">template_name (db_model.PlasmidSeqRun attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pydantic.html#db_model.AssemblyFeature.wt_feature_name">wt_feature_name (db_model.AssemblyFeature attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pydantic.html#db_model.AssemblyPolymorphism.wt_nt_end">wt_nt_end (db_model.AssemblyPolymorphism attribute)</a>
+</li>
+      <li><a href="python/pydantic.html#db_model.AssemblyPolymorphism.wt_nt_start">wt_nt_start (db_model.AssemblyPolymorphism attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 
 
            </div>

@@ -1,0 +1,529 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>db_model &mdash; PlasmidSeq Analysis Pipeline  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=6dbb43f8"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+      <script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
+window.addEventListener("load", () => mermaid.run());
+</script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            PlasmidSeq Analysis Pipeline
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python.html">Module Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PlasmidSeq Analysis Pipeline</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">db_model</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for db_model</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Annotated</span>
+
+<span class="kn">import</span> <span class="nn">boto3</span>
+<span class="kn">from</span> <span class="nn">sqlmodel</span> <span class="kn">import</span> <span class="n">SQLModel</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">create_engine</span><span class="p">,</span> <span class="n">Relationship</span>
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">validator</span>
+<span class="kn">from</span> <span class="nn">nanoid</span> <span class="kn">import</span> <span class="n">generate</span> <span class="k">as</span> <span class="n">get_nanoid</span>
+
+
+<div class="viewcode-block" id="LambdaMixin">
+<a class="viewcode-back" href="../python/pydantic.html#db_model.LambdaMixin">[docs]</a>
+<span class="k">class</span> <span class="nc">LambdaMixin</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Provides functionality for generating JSON payloads in a Lambda-compatible format.</span>
+
+<span class="sd">    This mixin class is designed to complement SQLModel by adding a method to create</span>
+<span class="sd">    JSON payloads in the structure expected by AWS Lambda. It constructs and returns</span>
+<span class="sd">    a dictionary in the format of a mock HTTP POST request, enabling usage in</span>
+<span class="sd">    Lambda-like environments or testing scenarios.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="LambdaMixin.lambda_json">
+<a class="viewcode-back" href="../python/pydantic.html#db_model.LambdaMixin.lambda_json">[docs]</a>
+    <span class="k">def</span> <span class="nf">lambda_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a dictionary mimicking an AWS Lambda Proxy Integration event with a JSON body.</span>
+
+<span class="sd">        This method creates a simulated Lambda event structure intended for testing</span>
+<span class="sd">        or local development. The returned dictionary includes fields such as the body,</span>
+<span class="sd">        resource path, HTTP method, and a minimal request context. The JSON body is</span>
+<span class="sd">        produced by calling the instance&#39;s `json` method.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            function (str): Name of the Lambda handler or function being invoked.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary representing an AWS Lambda Proxy Integration event with a</span>
+<span class="sd">            JSON body.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">body</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span>
+            <span class="n">resource</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="n">function</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="n">path</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="n">function</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="n">httpMethod</span><span class="o">=</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+            <span class="n">requestContext</span><span class="o">=</span><span class="p">{}</span>
+        <span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="PlasmidSeqRun">
+<a class="viewcode-back" href="../python/pydantic.html#db_model.PlasmidSeqRun">[docs]</a>
+<span class="k">class</span> <span class="nc">PlasmidSeqRun</span><span class="p">(</span><span class="n">LambdaMixin</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a plasmid sequencing run, storing relevant metadata and enabling</span>
+<span class="sd">    data operations.</span>
+
+<span class="sd">    This class is designed to store information about a plasmid sequencing run,</span>
+<span class="sd">    including details about the experiment, associated assemblies, and potential</span>
+<span class="sd">    errors encountered during processing. It provides methods for formatting paths</span>
+<span class="sd">    and template genomes while enforcing validation on specific fields.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        id: Optional unique identifier for the sequence run.</span>
+<span class="sd">        data_id: Identifier for the associated data.</span>
+<span class="sd">        experiment_id: Identifier for the associated experiment.</span>
+<span class="sd">        last_step: Optional last recorded step of the sequencing process.</span>
+<span class="sd">        template_name: Optional name of the sequencing template.</span>
+<span class="sd">        template_length: Optional length of the sequencing template.</span>
+<span class="sd">        basespace_href: Optional hyperlink to the Basespace resource.</span>
+<span class="sd">        assembly_count: Count of assemblies associated with the sequencing run.</span>
+<span class="sd">        assembly_coverage_mean: Optional mean coverage for associated assemblies.</span>
+<span class="sd">        assembly_coverage_std: Optional standard deviation of coverage for assemblies.</span>
+<span class="sd">        error_type: Optional type of error encountered in the sequencing run.</span>
+<span class="sd">        error_message: Optional error message for the encountered issue.</span>
+<span class="sd">        error_path: Optional path to the resource that caused the error.</span>
+<span class="sd">        assemblies: List of related plasmid sequence assemblies.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">data_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">last_step</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">template_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">template_length</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="n">basespace_href</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">assembly_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">assembly_coverage_mean</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+    <span class="n">assembly_coverage_std</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+    <span class="n">error_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">error_message</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">error_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+
+    <span class="n">assemblies</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;PlasmidSeqAssembly&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="PlasmidSeqRun.data_path">
+<a class="viewcode-back" href="../python/pydantic.html#db_model.PlasmidSeqRun.data_path">[docs]</a>
+    <span class="k">def</span> <span class="nf">data_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">folders</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a formatted file path based on experiment ID and data ID.</span>
+
+<span class="sd">        This method constructs a specific file path by combining the experiment ID</span>
+<span class="sd">        and data ID as base components, and optionally appending additional folder</span>
+<span class="sd">        names provided as arguments. Spaces in the experiment ID are replaced with</span>
+<span class="sd">        underscores to ensure valid path formatting.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            folders: str</span>
+<span class="sd">                Optional folder names to be appended to the base path. Multiple</span>
+<span class="sd">                folder names can be provided as separate arguments.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: A formatted file path string composed of the base experiment and</span>
+<span class="sd">            data ID, optionally followed by the appended folder names.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">experiment_id</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">data_id</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">for</span> <span class="n">folder</span> <span class="ow">in</span> <span class="n">folders</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">+=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">folder</span>
+        <span class="k">return</span> <span class="n">path</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">template_gb</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Generates a formatted string representing the template name with a &#39;.gb&#39; file</span>
+<span class="sd">            extension.</span>
+
+<span class="sd">            This property provides a convenient way to access the full template name</span>
+<span class="sd">            with the &#39;.gb&#39; suffix appended.</span>
+
+<span class="sd">            Return:</span>
+<span class="sd">                str: The formatted template name with a &#39;.gb&#39; file extension.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">template_name</span><span class="si">}</span><span class="s2">.gb&quot;</span>
+
+<div class="viewcode-block" id="PlasmidSeqRun.strip_template_name">
+<a class="viewcode-back" href="../python/pydantic.html#db_model.PlasmidSeqRun.strip_template_name">[docs]</a>
+    <span class="nd">@validator</span><span class="p">(</span><span class="s1">&#39;template_name&#39;</span><span class="p">,</span> <span class="s1">&#39;data_id&#39;</span><span class="p">,</span> <span class="s1">&#39;experiment_id&#39;</span><span class="p">)</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">strip_template_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Validates and processes the given string attributes for the specified fields.</span>
+
+<span class="sd">        This method ensures that the provided string values for the given fields</span>
+<span class="sd">        are appropriately stripped of leading and trailing whitespace. This can</span>
+<span class="sd">        be used as a validation method in data models or for preprocessing</span>
+<span class="sd">        input data fields.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            v: The string value to be processed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The processed string value with leading and trailing whitespace removed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">v</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></div>
+</div>
+
+
+<div class="viewcode-block" id="PlasmidSeqAssembly">
+<a class="viewcode-back" href="../python/pydantic.html#db_model.PlasmidSeqAssembly">[docs]</a>
+<span class="k">class</span> <span class="nc">PlasmidSeqAssembly</span><span class="p">(</span><span class="n">LambdaMixin</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a plasmid sequence assembly.</span>
+
+<span class="sd">    This class models a plasmid sequence assembly including its associated attributes,</span>
+<span class="sd">    relationships, and a method to get its GenBank formatted file name. It is a table-enabled</span>
+<span class="sd">    class with relationships to other relevant entities, making it suitable for use in a database</span>
+<span class="sd">    context.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        id (Optional[int]): Unique identifier for the plasmid sequence assembly. Defaults to None.</span>
+<span class="sd">        run_id (int): Foreign key that links to a specific plasmid sequence run.</span>
+<span class="sd">        assembly_name (str): Name of the assembly.</span>
+<span class="sd">        contig_path (str): Path to the contig file for the assembly.</span>
+<span class="sd">        length (int): Length of the assembly in base pairs.</span>
+<span class="sd">        min_prevalence (float): Minimum prevalence threshold for identifying features.</span>
+
+<span class="sd">    Relationships:</span>
+<span class="sd">        sample (PlasmidSeqRun): Associated plasmid sequencing run connected through a back_populates</span>
+<span class="sd">            relationship with the &#39;assemblies&#39; attribute.</span>
+<span class="sd">        features (List[AssemblyFeature]): List of assembly features identified in the plasmid</span>
+<span class="sd">            sequence, linked via a back_populates relationship with the &#39;assembly&#39; attribute.</span>
+<span class="sd">        polymorphisms (List[AssemblyPolymorphism]): List of assembly polymorphisms linked to the</span>
+<span class="sd">            plasmid sequence, connected via a back_populates relationship with the &#39;assembly&#39;</span>
+<span class="sd">            attribute.</span>
+
+<span class="sd">    Properties:</span>
+<span class="sd">        assembly_gb (str): Returns the GenBank formatted file name for the assembly. The name is</span>
+<span class="sd">            derived by appending a &quot;.gb&quot; extension to the assembly_name attribute.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">run_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">foreign_key</span><span class="o">=</span><span class="s1">&#39;plasmidseqrun.id&#39;</span><span class="p">)</span>
+    <span class="n">assembly_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">contig_path</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">length</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">min_prevalence</span><span class="p">:</span> <span class="nb">float</span>
+
+    <span class="n">sample</span><span class="p">:</span> <span class="n">PlasmidSeqRun</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;assemblies&#39;</span><span class="p">)</span>
+    <span class="n">features</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;AssemblyFeature&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;assembly&#39;</span><span class="p">)</span>
+    <span class="n">polymorphisms</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;AssemblyPolymorphism&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;assembly&#39;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">assembly_gb</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The assembly GenBank formatted file name.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">assembly_name</span><span class="si">}</span><span class="s2">.gb&quot;</span></div>
+
+
+
+<span class="k">class</span> <span class="nc">AssemblyList</span><span class="p">(</span><span class="n">LambdaMixin</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a collection of plasmid sequence assemblies.</span>
+
+<span class="sd">    This class is designed to encapsulate and manage a list of PlasmidSeqAssembly</span>
+<span class="sd">    objects. It may provide utilities for operating on these assemblies, enabling</span>
+<span class="sd">    structured handling and manipulation of the data related to plasmid sequencing</span>
+<span class="sd">    processes.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        assemblies (List[PlasmidSeqAssembly]): List of plasmid sequence assemblies</span>
+<span class="sd">        managed within this collection.</span>
+
+<span class="sd">    :meta private:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">assemblies</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">PlasmidSeqAssembly</span><span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">FeaturePolymorphism</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a many-to-many relationship between features and polymorphisms</span>
+<span class="sd">    within a database for modeling genetic associations.</span>
+
+<span class="sd">    This class is designed as a table representation to establish a relational link</span>
+<span class="sd">    between `Feature` and `Polymorphism` entities while also supporting SQLModel</span>
+<span class="sd">    functionalities. It includes primary key constraints to ensure the uniqueness</span>
+<span class="sd">    of the connection.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">    feature_id: Optional int</span>
+<span class="sd">        The identifier linking to a feature in the `assemblyfeature` table.</span>
+<span class="sd">    polymorphism_id: Optional int</span>
+<span class="sd">        The identifier linking to a polymorphism in the `assemblypolymorphism` table.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">feature_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">foreign_key</span><span class="o">=</span><span class="s1">&#39;assemblyfeature.id&#39;</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">polymorphism_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">foreign_key</span><span class="o">=</span><span class="s1">&#39;assemblypolymorphism.id&#39;</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="AssemblyFeature">
+<a class="viewcode-back" href="../python/pydantic.html#db_model.AssemblyFeature">[docs]</a>
+<span class="k">class</span> <span class="nc">AssemblyFeature</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a feature within a plasmid sequence assembly.</span>
+
+<span class="sd">    This class is used to define the details of a specific feature associated</span>
+<span class="sd">    with a plasmid sequence assembly. It includes information about the</span>
+<span class="sd">    feature type, its reference name, its name in the assembly, and any</span>
+<span class="sd">    potential changes made to it such as deletions or frameshift residues.</span>
+<span class="sd">    Relationships to the parent assembly and associated polymorphisms are</span>
+<span class="sd">    also included for data integrity and query purposes.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        id (Optional[int]): The unique identifier for the AssemblyFeature.</span>
+<span class="sd">            This is the primary key in the database table.</span>
+<span class="sd">        assembly_id (int): The foreign key referencing the &#39;plasmidseqassembly.id&#39;.</span>
+<span class="sd">        feature_type (str): The type of the feature (e.g., gene, CDS, etc.).</span>
+<span class="sd">        wt_feature_name (str): The name of the feature in the wild-type sequence.</span>
+<span class="sd">        assembly_feature_name (str): The name of the feature as identified in</span>
+<span class="sd">            the assembly.</span>
+<span class="sd">        deleted (bool): Indicates whether the feature was deleted. Defaults to False.</span>
+<span class="sd">        frameshift_residue (Optional[int]): The residue position associated</span>
+<span class="sd">            with a frameshift mutation, if applicable.</span>
+<span class="sd">        assembly (PlasmidSeqAssembly): The parent plasmid sequence assembly object</span>
+<span class="sd">            associated with the feature.</span>
+<span class="sd">        polymorphisms (List[AssemblyPolymorphism]): A list of polymorphisms linked</span>
+<span class="sd">            to the feature through a many-to-many relationship using the</span>
+<span class="sd">            FeaturePolymorphism link model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">assembly_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">foreign_key</span><span class="o">=</span><span class="s1">&#39;plasmidseqassembly.id&#39;</span><span class="p">)</span>
+    <span class="n">feature_type</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">wt_feature_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">assembly_feature_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">deleted</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">frameshift_residue</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+
+    <span class="n">assembly</span><span class="p">:</span> <span class="n">PlasmidSeqAssembly</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;features&#39;</span><span class="p">)</span>
+    <span class="n">polymorphisms</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;AssemblyPolymorphism&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;features&#39;</span><span class="p">,</span>
+                                                               <span class="n">link_model</span><span class="o">=</span><span class="n">FeaturePolymorphism</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="AssemblyPolymorphism">
+<a class="viewcode-back" href="../python/pydantic.html#db_model.AssemblyPolymorphism">[docs]</a>
+<span class="k">class</span> <span class="nc">AssemblyPolymorphism</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class representing assembly polymorphisms and their relationships.</span>
+
+<span class="sd">    This class defines the properties and relationships of polymorphisms in an assembly. It is</span>
+<span class="sd">    a SQLModel table that includes fields for referencing assemblies, polymorphism types,</span>
+<span class="sd">    coordinate ranges, and potential effects on coding sequences (CDS). The relationships to</span>
+<span class="sd">    assemblies and associated features are also defined, enabling efficient querying and</span>
+<span class="sd">    management of polymorphism data.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        id (Optional[int]): Unique identifier for the polymorphism entry; primary key.</span>
+<span class="sd">        assembly_id (int): Foreign key referencing the associated assembly.</span>
+<span class="sd">        poly_type (str): Type of polymorphism (e.g., &quot;SNP&quot;, &quot;insertion&quot;, &quot;deletion&quot;).</span>
+<span class="sd">        wt_nt_start (Optional[int]): Start coordinate of the wild-type nucleotide sequence.</span>
+<span class="sd">        wt_nt_end (Optional[int]): End coordinate of the wild-type nucleotide sequence.</span>
+<span class="sd">        assembly_nt_start (Optional[int]): Start coordinate of the polymorphism in the assembly.</span>
+<span class="sd">        assembly_nt_end (Optional[int]): End coordinate of the polymorphism in the assembly.</span>
+<span class="sd">        cds_effect (Optional[str]): Description of the polymorphism&#39;s effect on coding sequences.</span>
+
+<span class="sd">    Relationships:</span>
+<span class="sd">        assembly (PlasmidSeqAssembly): Relationship linking to the associated</span>
+<span class="sd">            plasmid sequence assembly.</span>
+<span class="sd">        features (List[AssemblyFeature]): Relationship linking to associated assembly features,</span>
+<span class="sd">            managed with the FeaturePolymorphism link model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">assembly_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">foreign_key</span><span class="o">=</span><span class="s1">&#39;plasmidseqassembly.id&#39;</span><span class="p">)</span>
+    <span class="n">poly_type</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">wt_nt_start</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="n">wt_nt_end</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="n">assembly_nt_start</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="n">assembly_nt_end</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="n">cds_effect</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+
+    <span class="n">assembly</span><span class="p">:</span> <span class="n">PlasmidSeqAssembly</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;polymorphisms&#39;</span><span class="p">)</span>
+    <span class="n">features</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;AssemblyFeature&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s1">&#39;polymorphisms&#39;</span><span class="p">,</span> <span class="n">link_model</span><span class="o">=</span><span class="n">FeaturePolymorphism</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="MapStatusInfo">
+<a class="viewcode-back" href="../python/pydantic.html#db_model.MapStatusInfo">[docs]</a>
+<span class="k">class</span> <span class="nc">MapStatusInfo</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents mapping status information in a structured format.</span>
+
+<span class="sd">    This class defines a model for mapping status information used within applications</span>
+<span class="sd">    that leverage structured data for processing and integration. It inherits from the</span>
+<span class="sd">    SQLModel, making it suitable for use with SQL-based databases. It contains attributes</span>
+<span class="sd">    describing the status of a specific process or operation, alongside its associated</span>
+<span class="sd">    error and metadata information.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        Error: Optional description of the error as a string.</span>
+<span class="sd">        Cause: Optional detailed cause of the error as a string.</span>
+<span class="sd">        RunID: Optional identifier for the associated run as an integer.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">Error</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">Cause</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">RunID</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span></div>
+
+
+
+<span class="n">RunListTypes</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">PlasmidSeqRun</span><span class="p">,</span> <span class="n">MapStatusInfo</span><span class="p">,</span> <span class="s2">&quot;PlasmidSeqRunList&quot;</span><span class="p">]</span>
+<span class="sd">&quot;&quot;&quot;Type alias for run list types.&quot;&quot;&quot;</span>
+<span class="n">RLT</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;RLT&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">RunListTypes</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;Type variable for run list types.&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="PlasmidSeqRunList">
+<a class="viewcode-back" href="../python/pydantic.html#db_model.PlasmidSeqRunList">[docs]</a>
+<span class="k">class</span> <span class="nc">PlasmidSeqRunList</span><span class="p">(</span><span class="n">LambdaMixin</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a list of plasmid sequencing runs.</span>
+
+<span class="sd">    The PlasmidSeqRunList class is used to organize and manipulate a collection of</span>
+<span class="sd">    sequencing runs, which could be of various types. It provides functionality</span>
+<span class="sd">    to filter and retrieve runs based on their type, traversing nested instances</span>
+<span class="sd">    of PlasmidSeqRunList if necessary. This class extends the functionality of the</span>
+<span class="sd">    LambdaMixin class for additional utility.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        runs (List[RunListTypes]): A list containing sequencing runs, which may</span>
+<span class="sd">            include nested PlasmidSeqRunList instances or other run types.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">runs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RunListTypes</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">runs_of_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">run_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">RLT</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">RLT</span><span class="p">]:</span>
+        <span class="n">out_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">run_type</span><span class="p">):</span>
+                <span class="n">out_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">PlasmidSeqRunList</span><span class="p">):</span>
+                <span class="n">out_list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">runs_of_type</span><span class="p">(</span><span class="n">run_type</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">out_list</span></div>
+
+
+
+<div class="viewcode-block" id="ExperimentStartModel">
+<a class="viewcode-back" href="../python/pydantic.html#db_model.ExperimentStartModel">[docs]</a>
+<span class="k">class</span> <span class="nc">ExperimentStartModel</span><span class="p">(</span><span class="n">LambdaMixin</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents the data model for starting an experiment.</span>
+
+<span class="sd">    This class is designed to encapsulate the essential data</span>
+<span class="sd">    and structure required to initiate an experiment. It serves</span>
+<span class="sd">    as a container for relevant attributes and integrates with</span>
+<span class="sd">    LambdaMixin for additional functionality.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        name (str): The name of the experiment being initiated.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">make_engine</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Entered make engine&#39;</span><span class="p">)</span>
+    <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;DB_URI&#39;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Engine Created&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">engine</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">SQLModel</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">make_engine</span><span class="p">())</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Rob Warden-Rothman.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

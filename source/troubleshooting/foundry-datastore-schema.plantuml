@@ -1,0 +1,59 @@
+@startuml
+
+'!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class assemblyfeature {
+   assembly_id: integer
+   wt_feature_name: varchar
+   assembly_feature_name: varchar
+   deleted: boolean
+   frameshift_residue: integer
+   feature_type: varchar
+   id: integer
+}
+class assemblypolymorphism {
+   assembly_id: integer
+   wt_nt_start: integer
+   wt_nt_end: integer
+   assembly_nt_start: integer
+   assembly_nt_end: integer
+   cds_effect: varchar
+   poly_type: varchar
+   id: integer
+}
+class featurepolymorphism {
+   feature_id: integer
+   polymorphism_id: integer
+}
+class plasmidseqassembly {
+   run_id: integer
+   assembly_name: varchar
+   contig_path: varchar
+   length: integer
+   min_prevalence: double precision
+   id: integer
+}
+class plasmidseqrun {
+   data_id: varchar
+   experiment_id: varchar
+   last_step: varchar
+   template_name: varchar
+   basespace_href: varchar
+   error_type: varchar
+   error_message: varchar
+   error_path: varchar
+   assembly_count: integer
+   template_length: integer
+   assembly_coverage_mean: double precision
+   assembly_coverage_std: double precision
+   id: integer
+}
+
+plasmidseqassembly    -[#595959,plain]-^  plasmidseqrun        : "run_id:id"
+assemblyfeature       -[#595959,plain]-^  plasmidseqassembly   : "assembly_id:id"
+assemblypolymorphism  -[#595959,plain]-^  plasmidseqassembly   : "assembly_id:id"
+featurepolymorphism   -[#595959,plain]-^  assemblyfeature      : "feature_id:id"
+featurepolymorphism   -[#595959,plain]-^  assemblypolymorphism : "polymorphism_id:id"
+@enduml

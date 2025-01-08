@@ -1,0 +1,860 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pydantic Models &mdash; PlasmidSeq Analysis Pipeline  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=6dbb43f8"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="AWS Configuration" href="../aws.html" />
+    <link rel="prev" title="Module Reference" href="../python.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            PlasmidSeq Analysis Pipeline
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../python.html">Module Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Pydantic Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#db_model.LambdaMixin"><code class="docutils literal notranslate"><span class="pre">LambdaMixin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.LambdaMixin.lambda_json"><code class="docutils literal notranslate"><span class="pre">LambdaMixin.lambda_json()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#db_model.PlasmidSeqRun"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqRun</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.PlasmidSeqRun.id"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqRun.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.PlasmidSeqRun.data_id"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqRun.data_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.PlasmidSeqRun.experiment_id"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqRun.experiment_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.PlasmidSeqRun.last_step"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqRun.last_step</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.PlasmidSeqRun.template_name"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqRun.template_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.PlasmidSeqRun.template_length"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqRun.template_length</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.PlasmidSeqRun.basespace_href"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqRun.basespace_href</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.PlasmidSeqRun.assembly_count"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqRun.assembly_count</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.PlasmidSeqRun.assembly_coverage_mean"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqRun.assembly_coverage_mean</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.PlasmidSeqRun.assembly_coverage_std"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqRun.assembly_coverage_std</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.PlasmidSeqRun.error_type"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqRun.error_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.PlasmidSeqRun.error_message"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqRun.error_message</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.PlasmidSeqRun.error_path"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqRun.error_path</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.PlasmidSeqRun.assemblies"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqRun.assemblies</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.PlasmidSeqRun.data_path"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqRun.data_path()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.PlasmidSeqRun.strip_template_name"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqRun.strip_template_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.PlasmidSeqRun.template_gb"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqRun.template_gb</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#db_model.PlasmidSeqAssembly"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqAssembly</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.PlasmidSeqAssembly.id"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqAssembly.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.PlasmidSeqAssembly.run_id"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqAssembly.run_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.PlasmidSeqAssembly.assembly_name"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqAssembly.assembly_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.PlasmidSeqAssembly.contig_path"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqAssembly.contig_path</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.PlasmidSeqAssembly.length"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqAssembly.length</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.PlasmidSeqAssembly.min_prevalence"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqAssembly.min_prevalence</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.PlasmidSeqAssembly.assembly_gb"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqAssembly.assembly_gb</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#db_model.AssemblyFeature"><code class="docutils literal notranslate"><span class="pre">AssemblyFeature</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.AssemblyFeature.id"><code class="docutils literal notranslate"><span class="pre">AssemblyFeature.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.AssemblyFeature.assembly_id"><code class="docutils literal notranslate"><span class="pre">AssemblyFeature.assembly_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.AssemblyFeature.feature_type"><code class="docutils literal notranslate"><span class="pre">AssemblyFeature.feature_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.AssemblyFeature.wt_feature_name"><code class="docutils literal notranslate"><span class="pre">AssemblyFeature.wt_feature_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.AssemblyFeature.assembly_feature_name"><code class="docutils literal notranslate"><span class="pre">AssemblyFeature.assembly_feature_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.AssemblyFeature.deleted"><code class="docutils literal notranslate"><span class="pre">AssemblyFeature.deleted</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.AssemblyFeature.frameshift_residue"><code class="docutils literal notranslate"><span class="pre">AssemblyFeature.frameshift_residue</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.AssemblyFeature.assembly"><code class="docutils literal notranslate"><span class="pre">AssemblyFeature.assembly</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.AssemblyFeature.polymorphisms"><code class="docutils literal notranslate"><span class="pre">AssemblyFeature.polymorphisms</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#db_model.AssemblyPolymorphism"><code class="docutils literal notranslate"><span class="pre">AssemblyPolymorphism</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.AssemblyPolymorphism.id"><code class="docutils literal notranslate"><span class="pre">AssemblyPolymorphism.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.AssemblyPolymorphism.assembly_id"><code class="docutils literal notranslate"><span class="pre">AssemblyPolymorphism.assembly_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.AssemblyPolymorphism.poly_type"><code class="docutils literal notranslate"><span class="pre">AssemblyPolymorphism.poly_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.AssemblyPolymorphism.wt_nt_start"><code class="docutils literal notranslate"><span class="pre">AssemblyPolymorphism.wt_nt_start</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.AssemblyPolymorphism.wt_nt_end"><code class="docutils literal notranslate"><span class="pre">AssemblyPolymorphism.wt_nt_end</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.AssemblyPolymorphism.assembly_nt_start"><code class="docutils literal notranslate"><span class="pre">AssemblyPolymorphism.assembly_nt_start</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.AssemblyPolymorphism.assembly_nt_end"><code class="docutils literal notranslate"><span class="pre">AssemblyPolymorphism.assembly_nt_end</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.AssemblyPolymorphism.cds_effect"><code class="docutils literal notranslate"><span class="pre">AssemblyPolymorphism.cds_effect</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#db_model.MapStatusInfo"><code class="docutils literal notranslate"><span class="pre">MapStatusInfo</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.MapStatusInfo.Error"><code class="docutils literal notranslate"><span class="pre">MapStatusInfo.Error</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.MapStatusInfo.Cause"><code class="docutils literal notranslate"><span class="pre">MapStatusInfo.Cause</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.MapStatusInfo.RunID"><code class="docutils literal notranslate"><span class="pre">MapStatusInfo.RunID</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#db_model.PlasmidSeqRunList"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqRunList</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.PlasmidSeqRunList.runs"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqRunList.runs</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#db_model.ExperimentStartModel"><code class="docutils literal notranslate"><span class="pre">ExperimentStartModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#db_model.ExperimentStartModel.name"><code class="docutils literal notranslate"><span class="pre">ExperimentStartModel.name</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../aws.html">AWS Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../aws.html#overview">Overview</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PlasmidSeq Analysis Pipeline</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../python.html">Module Reference</a></li>
+      <li class="breadcrumb-item active">Pydantic Models</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/python/pydantic.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pydantic-models">
+<h1>Pydantic Models<a class="headerlink" href="#pydantic-models" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="db_model.LambdaMixin">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">db_model.</span></span><span class="sig-name descname"><span class="pre">LambdaMixin</span></span><a class="reference internal" href="../_modules/db_model.html#LambdaMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#db_model.LambdaMixin" title="Link to this definition"></a></dt>
+<dd><p>Provides functionality for generating JSON payloads in a Lambda-compatible format.</p>
+<p>This mixin class is designed to complement SQLModel by adding a method to create
+JSON payloads in the structure expected by AWS Lambda. It constructs and returns
+a dictionary in the format of a mock HTTP POST request, enabling usage in
+Lambda-like environments or testing scenarios.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="db_model.LambdaMixin.lambda_json">
+<span class="sig-name descname"><span class="pre">lambda_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/db_model.html#LambdaMixin.lambda_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#db_model.LambdaMixin.lambda_json" title="Link to this definition"></a></dt>
+<dd><p>Generates a dictionary mimicking an AWS Lambda Proxy Integration event with a JSON body.</p>
+<p>This method creates a simulated Lambda event structure intended for testing
+or local development. The returned dictionary includes fields such as the body,
+resource path, HTTP method, and a minimal request context. The JSON body is
+produced by calling the instance’s <cite>json</cite> method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>function</strong> (<em>str</em>) – Name of the Lambda handler or function being invoked.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary representing an AWS Lambda Proxy Integration event with a
+JSON body.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqRun">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">db_model.</span></span><span class="sig-name descname"><span class="pre">PlasmidSeqRun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiment_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basespace_href</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assembly_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assembly_coverage_mean</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assembly_coverage_std</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/db_model.html#PlasmidSeqRun"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#db_model.PlasmidSeqRun" title="Link to this definition"></a></dt>
+<dd><p>Represents a plasmid sequencing run, storing relevant metadata and enabling
+data operations.</p>
+<p>This class is designed to store information about a plasmid sequencing run,
+including details about the experiment, associated assemblies, and potential
+errors encountered during processing. It provides methods for formatting paths
+and template genomes while enforcing validation on specific fields.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqRun.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#db_model.PlasmidSeqRun.id" title="Link to this definition"></a></dt>
+<dd><p>Optional unique identifier for the sequence run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqRun.data_id">
+<span class="sig-name descname"><span class="pre">data_id</span></span><a class="headerlink" href="#db_model.PlasmidSeqRun.data_id" title="Link to this definition"></a></dt>
+<dd><p>Identifier for the associated data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqRun.experiment_id">
+<span class="sig-name descname"><span class="pre">experiment_id</span></span><a class="headerlink" href="#db_model.PlasmidSeqRun.experiment_id" title="Link to this definition"></a></dt>
+<dd><p>Identifier for the associated experiment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqRun.last_step">
+<span class="sig-name descname"><span class="pre">last_step</span></span><a class="headerlink" href="#db_model.PlasmidSeqRun.last_step" title="Link to this definition"></a></dt>
+<dd><p>Optional last recorded step of the sequencing process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqRun.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><a class="headerlink" href="#db_model.PlasmidSeqRun.template_name" title="Link to this definition"></a></dt>
+<dd><p>Optional name of the sequencing template.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqRun.template_length">
+<span class="sig-name descname"><span class="pre">template_length</span></span><a class="headerlink" href="#db_model.PlasmidSeqRun.template_length" title="Link to this definition"></a></dt>
+<dd><p>Optional length of the sequencing template.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqRun.basespace_href">
+<span class="sig-name descname"><span class="pre">basespace_href</span></span><a class="headerlink" href="#db_model.PlasmidSeqRun.basespace_href" title="Link to this definition"></a></dt>
+<dd><p>Optional hyperlink to the Basespace resource.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqRun.assembly_count">
+<span class="sig-name descname"><span class="pre">assembly_count</span></span><a class="headerlink" href="#db_model.PlasmidSeqRun.assembly_count" title="Link to this definition"></a></dt>
+<dd><p>Count of assemblies associated with the sequencing run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqRun.assembly_coverage_mean">
+<span class="sig-name descname"><span class="pre">assembly_coverage_mean</span></span><a class="headerlink" href="#db_model.PlasmidSeqRun.assembly_coverage_mean" title="Link to this definition"></a></dt>
+<dd><p>Optional mean coverage for associated assemblies.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqRun.assembly_coverage_std">
+<span class="sig-name descname"><span class="pre">assembly_coverage_std</span></span><a class="headerlink" href="#db_model.PlasmidSeqRun.assembly_coverage_std" title="Link to this definition"></a></dt>
+<dd><p>Optional standard deviation of coverage for assemblies.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqRun.error_type">
+<span class="sig-name descname"><span class="pre">error_type</span></span><a class="headerlink" href="#db_model.PlasmidSeqRun.error_type" title="Link to this definition"></a></dt>
+<dd><p>Optional type of error encountered in the sequencing run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqRun.error_message">
+<span class="sig-name descname"><span class="pre">error_message</span></span><a class="headerlink" href="#db_model.PlasmidSeqRun.error_message" title="Link to this definition"></a></dt>
+<dd><p>Optional error message for the encountered issue.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqRun.error_path">
+<span class="sig-name descname"><span class="pre">error_path</span></span><a class="headerlink" href="#db_model.PlasmidSeqRun.error_path" title="Link to this definition"></a></dt>
+<dd><p>Optional path to the resource that caused the error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqRun.assemblies">
+<span class="sig-name descname"><span class="pre">assemblies</span></span><a class="headerlink" href="#db_model.PlasmidSeqRun.assemblies" title="Link to this definition"></a></dt>
+<dd><p>List of related plasmid sequence assemblies.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#db_model.PlasmidSeqAssembly" title="db_model.PlasmidSeqAssembly">db_model.PlasmidSeqAssembly</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqRun.data_path">
+<span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">folders</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/db_model.html#PlasmidSeqRun.data_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#db_model.PlasmidSeqRun.data_path" title="Link to this definition"></a></dt>
+<dd><p>Generates a formatted file path based on experiment ID and data ID.</p>
+<p>This method constructs a specific file path by combining the experiment ID
+and data ID as base components, and optionally appending additional folder
+names provided as arguments. Spaces in the experiment ID are replaced with
+underscores to ensure valid path formatting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>folders</strong> – str
+Optional folder names to be appended to the base path. Multiple
+folder names can be provided as separate arguments.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A formatted file path string composed of the base experiment and
+data ID, optionally followed by the appended folder names.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqRun.strip_template_name">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">strip_template_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/db_model.html#PlasmidSeqRun.strip_template_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#db_model.PlasmidSeqRun.strip_template_name" title="Link to this definition"></a></dt>
+<dd><p>Validates and processes the given string attributes for the specified fields.</p>
+<p>This method ensures that the provided string values for the given fields
+are appropriately stripped of leading and trailing whitespace. This can
+be used as a validation method in data models or for preprocessing
+input data fields.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>v</strong> – The string value to be processed.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The processed string value with leading and trailing whitespace removed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqRun.template_gb">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">template_gb</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#db_model.PlasmidSeqRun.template_gb" title="Link to this definition"></a></dt>
+<dd><p>Generates a formatted string representing the template name with a ‘.gb’ file
+extension.</p>
+<p>This property provides a convenient way to access the full template name
+with the ‘.gb’ suffix appended.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The formatted template name with a ‘.gb’ file extension.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqAssembly">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">db_model.</span></span><span class="sig-name descname"><span class="pre">PlasmidSeqAssembly</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assembly_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contig_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_prevalence</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/db_model.html#PlasmidSeqAssembly"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#db_model.PlasmidSeqAssembly" title="Link to this definition"></a></dt>
+<dd><p>Represents a plasmid sequence assembly.</p>
+<p>This class models a plasmid sequence assembly including its associated attributes,
+relationships, and a method to get its GenBank formatted file name. It is a table-enabled
+class with relationships to other relevant entities, making it suitable for use in a database
+context.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqAssembly.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#db_model.PlasmidSeqAssembly.id" title="Link to this definition"></a></dt>
+<dd><p>Unique identifier for the plasmid sequence assembly. Defaults to None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqAssembly.run_id">
+<span class="sig-name descname"><span class="pre">run_id</span></span><a class="headerlink" href="#db_model.PlasmidSeqAssembly.run_id" title="Link to this definition"></a></dt>
+<dd><p>Foreign key that links to a specific plasmid sequence run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqAssembly.assembly_name">
+<span class="sig-name descname"><span class="pre">assembly_name</span></span><a class="headerlink" href="#db_model.PlasmidSeqAssembly.assembly_name" title="Link to this definition"></a></dt>
+<dd><p>Name of the assembly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqAssembly.contig_path">
+<span class="sig-name descname"><span class="pre">contig_path</span></span><a class="headerlink" href="#db_model.PlasmidSeqAssembly.contig_path" title="Link to this definition"></a></dt>
+<dd><p>Path to the contig file for the assembly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqAssembly.length">
+<span class="sig-name descname"><span class="pre">length</span></span><a class="headerlink" href="#db_model.PlasmidSeqAssembly.length" title="Link to this definition"></a></dt>
+<dd><p>Length of the assembly in base pairs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqAssembly.min_prevalence">
+<span class="sig-name descname"><span class="pre">min_prevalence</span></span><a class="headerlink" href="#db_model.PlasmidSeqAssembly.min_prevalence" title="Link to this definition"></a></dt>
+<dd><p>Minimum prevalence threshold for identifying features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="simple">
+<dt>Relationships:</dt><dd><dl class="simple">
+<dt>sample (PlasmidSeqRun): Associated plasmid sequencing run connected through a back_populates</dt><dd><p>relationship with the ‘assemblies’ attribute.</p>
+</dd>
+<dt>features (List[AssemblyFeature]): List of assembly features identified in the plasmid</dt><dd><p>sequence, linked via a back_populates relationship with the ‘assembly’ attribute.</p>
+</dd>
+<dt>polymorphisms (List[AssemblyPolymorphism]): List of assembly polymorphisms linked to the</dt><dd><p>plasmid sequence, connected via a back_populates relationship with the ‘assembly’
+attribute.</p>
+</dd>
+</dl>
+</dd>
+<dt>Properties:</dt><dd><dl class="simple">
+<dt>assembly_gb (str): Returns the GenBank formatted file name for the assembly. The name is</dt><dd><p>derived by appending a “.gb” extension to the assembly_name attribute.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqAssembly.assembly_gb">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">assembly_gb</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#db_model.PlasmidSeqAssembly.assembly_gb" title="Link to this definition"></a></dt>
+<dd><p>The assembly GenBank formatted file name.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="db_model.AssemblyFeature">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">db_model.</span></span><span class="sig-name descname"><span class="pre">AssemblyFeature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assembly_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wt_feature_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assembly_feature_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deleted</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frameshift_residue</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/db_model.html#AssemblyFeature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#db_model.AssemblyFeature" title="Link to this definition"></a></dt>
+<dd><p>Represents a feature within a plasmid sequence assembly.</p>
+<p>This class is used to define the details of a specific feature associated
+with a plasmid sequence assembly. It includes information about the
+feature type, its reference name, its name in the assembly, and any
+potential changes made to it such as deletions or frameshift residues.
+Relationships to the parent assembly and associated polymorphisms are
+also included for data integrity and query purposes.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.AssemblyFeature.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#db_model.AssemblyFeature.id" title="Link to this definition"></a></dt>
+<dd><p>The unique identifier for the AssemblyFeature.
+This is the primary key in the database table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.AssemblyFeature.assembly_id">
+<span class="sig-name descname"><span class="pre">assembly_id</span></span><a class="headerlink" href="#db_model.AssemblyFeature.assembly_id" title="Link to this definition"></a></dt>
+<dd><p>The foreign key referencing the ‘plasmidseqassembly.id’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.AssemblyFeature.feature_type">
+<span class="sig-name descname"><span class="pre">feature_type</span></span><a class="headerlink" href="#db_model.AssemblyFeature.feature_type" title="Link to this definition"></a></dt>
+<dd><p>The type of the feature (e.g., gene, CDS, etc.).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.AssemblyFeature.wt_feature_name">
+<span class="sig-name descname"><span class="pre">wt_feature_name</span></span><a class="headerlink" href="#db_model.AssemblyFeature.wt_feature_name" title="Link to this definition"></a></dt>
+<dd><p>The name of the feature in the wild-type sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.AssemblyFeature.assembly_feature_name">
+<span class="sig-name descname"><span class="pre">assembly_feature_name</span></span><a class="headerlink" href="#db_model.AssemblyFeature.assembly_feature_name" title="Link to this definition"></a></dt>
+<dd><p>The name of the feature as identified in
+the assembly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.AssemblyFeature.deleted">
+<span class="sig-name descname"><span class="pre">deleted</span></span><a class="headerlink" href="#db_model.AssemblyFeature.deleted" title="Link to this definition"></a></dt>
+<dd><p>Indicates whether the feature was deleted. Defaults to False.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.AssemblyFeature.frameshift_residue">
+<span class="sig-name descname"><span class="pre">frameshift_residue</span></span><a class="headerlink" href="#db_model.AssemblyFeature.frameshift_residue" title="Link to this definition"></a></dt>
+<dd><p>The residue position associated
+with a frameshift mutation, if applicable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.AssemblyFeature.assembly">
+<span class="sig-name descname"><span class="pre">assembly</span></span><a class="headerlink" href="#db_model.AssemblyFeature.assembly" title="Link to this definition"></a></dt>
+<dd><p>The parent plasmid sequence assembly object
+associated with the feature.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#db_model.PlasmidSeqAssembly" title="db_model.PlasmidSeqAssembly">PlasmidSeqAssembly</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.AssemblyFeature.polymorphisms">
+<span class="sig-name descname"><span class="pre">polymorphisms</span></span><a class="headerlink" href="#db_model.AssemblyFeature.polymorphisms" title="Link to this definition"></a></dt>
+<dd><p>A list of polymorphisms linked
+to the feature through a many-to-many relationship using the
+FeaturePolymorphism link model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#db_model.AssemblyPolymorphism" title="db_model.AssemblyPolymorphism">AssemblyPolymorphism</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="db_model.AssemblyPolymorphism">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">db_model.</span></span><span class="sig-name descname"><span class="pre">AssemblyPolymorphism</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assembly_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">poly_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wt_nt_start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wt_nt_end</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assembly_nt_start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assembly_nt_end</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cds_effect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/db_model.html#AssemblyPolymorphism"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#db_model.AssemblyPolymorphism" title="Link to this definition"></a></dt>
+<dd><p>A class representing assembly polymorphisms and their relationships.</p>
+<p>This class defines the properties and relationships of polymorphisms in an assembly. It is
+a SQLModel table that includes fields for referencing assemblies, polymorphism types,
+coordinate ranges, and potential effects on coding sequences (CDS). The relationships to
+assemblies and associated features are also defined, enabling efficient querying and
+management of polymorphism data.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.AssemblyPolymorphism.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#db_model.AssemblyPolymorphism.id" title="Link to this definition"></a></dt>
+<dd><p>Unique identifier for the polymorphism entry; primary key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.AssemblyPolymorphism.assembly_id">
+<span class="sig-name descname"><span class="pre">assembly_id</span></span><a class="headerlink" href="#db_model.AssemblyPolymorphism.assembly_id" title="Link to this definition"></a></dt>
+<dd><p>Foreign key referencing the associated assembly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.AssemblyPolymorphism.poly_type">
+<span class="sig-name descname"><span class="pre">poly_type</span></span><a class="headerlink" href="#db_model.AssemblyPolymorphism.poly_type" title="Link to this definition"></a></dt>
+<dd><p>Type of polymorphism (e.g., “SNP”, “insertion”, “deletion”).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.AssemblyPolymorphism.wt_nt_start">
+<span class="sig-name descname"><span class="pre">wt_nt_start</span></span><a class="headerlink" href="#db_model.AssemblyPolymorphism.wt_nt_start" title="Link to this definition"></a></dt>
+<dd><p>Start coordinate of the wild-type nucleotide sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.AssemblyPolymorphism.wt_nt_end">
+<span class="sig-name descname"><span class="pre">wt_nt_end</span></span><a class="headerlink" href="#db_model.AssemblyPolymorphism.wt_nt_end" title="Link to this definition"></a></dt>
+<dd><p>End coordinate of the wild-type nucleotide sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.AssemblyPolymorphism.assembly_nt_start">
+<span class="sig-name descname"><span class="pre">assembly_nt_start</span></span><a class="headerlink" href="#db_model.AssemblyPolymorphism.assembly_nt_start" title="Link to this definition"></a></dt>
+<dd><p>Start coordinate of the polymorphism in the assembly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.AssemblyPolymorphism.assembly_nt_end">
+<span class="sig-name descname"><span class="pre">assembly_nt_end</span></span><a class="headerlink" href="#db_model.AssemblyPolymorphism.assembly_nt_end" title="Link to this definition"></a></dt>
+<dd><p>End coordinate of the polymorphism in the assembly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.AssemblyPolymorphism.cds_effect">
+<span class="sig-name descname"><span class="pre">cds_effect</span></span><a class="headerlink" href="#db_model.AssemblyPolymorphism.cds_effect" title="Link to this definition"></a></dt>
+<dd><p>Description of the polymorphism’s effect on coding sequences.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="simple">
+<dt>Relationships:</dt><dd><dl class="simple">
+<dt>assembly (PlasmidSeqAssembly): Relationship linking to the associated</dt><dd><p>plasmid sequence assembly.</p>
+</dd>
+<dt>features (List[AssemblyFeature]): Relationship linking to associated assembly features,</dt><dd><p>managed with the FeaturePolymorphism link model.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="db_model.MapStatusInfo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">db_model.</span></span><span class="sig-name descname"><span class="pre">MapStatusInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Error</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Cause</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RunID</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/db_model.html#MapStatusInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#db_model.MapStatusInfo" title="Link to this definition"></a></dt>
+<dd><p>Represents mapping status information in a structured format.</p>
+<p>This class defines a model for mapping status information used within applications
+that leverage structured data for processing and integration. It inherits from the
+SQLModel, making it suitable for use with SQL-based databases. It contains attributes
+describing the status of a specific process or operation, alongside its associated
+error and metadata information.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.MapStatusInfo.Error">
+<span class="sig-name descname"><span class="pre">Error</span></span><a class="headerlink" href="#db_model.MapStatusInfo.Error" title="Link to this definition"></a></dt>
+<dd><p>Optional description of the error as a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.MapStatusInfo.Cause">
+<span class="sig-name descname"><span class="pre">Cause</span></span><a class="headerlink" href="#db_model.MapStatusInfo.Cause" title="Link to this definition"></a></dt>
+<dd><p>Optional detailed cause of the error as a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.MapStatusInfo.RunID">
+<span class="sig-name descname"><span class="pre">RunID</span></span><a class="headerlink" href="#db_model.MapStatusInfo.RunID" title="Link to this definition"></a></dt>
+<dd><p>Optional identifier for the associated run as an integer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqRunList">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">db_model.</span></span><span class="sig-name descname"><span class="pre">PlasmidSeqRunList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#db_model.PlasmidSeqRun" title="db_model.PlasmidSeqRun"><span class="pre">PlasmidSeqRun</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#db_model.MapStatusInfo" title="db_model.MapStatusInfo"><span class="pre">MapStatusInfo</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#db_model.PlasmidSeqRunList" title="db_model.PlasmidSeqRunList"><span class="pre">PlasmidSeqRunList</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/db_model.html#PlasmidSeqRunList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#db_model.PlasmidSeqRunList" title="Link to this definition"></a></dt>
+<dd><p>Represents a list of plasmid sequencing runs.</p>
+<p>The PlasmidSeqRunList class is used to organize and manipulate a collection of
+sequencing runs, which could be of various types. It provides functionality
+to filter and retrieve runs based on their type, traversing nested instances
+of PlasmidSeqRunList if necessary. This class extends the functionality of the
+LambdaMixin class for additional utility.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.PlasmidSeqRunList.runs">
+<span class="sig-name descname"><span class="pre">runs</span></span><a class="headerlink" href="#db_model.PlasmidSeqRunList.runs" title="Link to this definition"></a></dt>
+<dd><p>A list containing sequencing runs, which may
+include nested PlasmidSeqRunList instances or other run types.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[RunListTypes]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="db_model.ExperimentStartModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">db_model.</span></span><span class="sig-name descname"><span class="pre">ExperimentStartModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/db_model.html#ExperimentStartModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#db_model.ExperimentStartModel" title="Link to this definition"></a></dt>
+<dd><p>Represents the data model for starting an experiment.</p>
+<p>This class is designed to encapsulate the essential data
+and structure required to initiate an experiment. It serves
+as a container for relevant attributes and integrates with
+LambdaMixin for additional functionality.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db_model.ExperimentStartModel.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#db_model.ExperimentStartModel.name" title="Link to this definition"></a></dt>
+<dd><p>The name of the experiment being initiated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../python.html" class="btn btn-neutral float-left" title="Module Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../aws.html" class="btn btn-neutral float-right" title="AWS Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Rob Warden-Rothman.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

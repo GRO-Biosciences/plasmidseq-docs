@@ -1,0 +1,285 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AWS Configuration &mdash; PlasmidSeq Analysis Pipeline  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=6dbb43f8"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+      <script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
+
+var loader_info = {name: 'logos', loader: () => fetch('https://unpkg.com/@iconify-json/logos@1/icons.json').then((res) => res.json())}
+mermaid.registerIconPacks([loader_info]);
+
+window.addEventListener("load", () => mermaid.run());
+</script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Pydantic Models" href="python/pydantic.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            PlasmidSeq Analysis Pipeline
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Module Reference</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">AWS Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#architecture">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#resource-arns">Resource ARNs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#workflow">Workflow</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PlasmidSeq Analysis Pipeline</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">AWS Configuration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/aws.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="aws-configuration">
+<h1>AWS Configuration<a class="headerlink" href="#aws-configuration" title="Link to this heading"></a></h1>
+<section id="architecture">
+<h2>Architecture<a class="headerlink" href="#architecture" title="Link to this heading"></a></h2>
+<pre  class="mermaid">
+        architecture-beta
+    service rtp1(logos:retool-icon)[Basespace Browser]
+
+    group aws(logos:aws)[us east 1]
+    service rds(logos:aws-rds)[foundry datastore] in aws
+
+    service api(logos:aws-api-gateway)[plasmid seq] in aws
+    service step(logos:aws-step-functions)[PlasmidSeq State Machine] in aws
+    service lambda(logos:aws-lambda)[plasmid seq processing] in aws
+    service bucket(logos:aws-s3)[foundry plasmid seq] in aws
+
+    rtp1:B -- T:api
+    rtp1:R -- T:rds
+    api:B -- T:step
+    rds:B -- T:lambda
+    step:R -- L:lambda
+    lambda:R -- L:bucket
+
+    service bs(internet)[Illumina BaseSpace API]
+
+    lambda:B -- T:bs
+    </pre></section>
+<section id="resource-arns">
+<h2>Resource ARNs<a class="headerlink" href="#resource-arns" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>ARN</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Lambda</p></td>
+<td><p>plasmid-seq-processing</p></td>
+<td><p>arn:aws:lambda:us-east-1:409124030547:function:plasmid-seq-processing</p></td>
+</tr>
+<tr class="row-odd"><td><p>API Gateway</p></td>
+<td><p>plasmid-seq</p></td>
+<td><p>arn:aws:apigateway:us-east-1::/restapis/vs0zqwkv7f</p></td>
+</tr>
+<tr class="row-even"><td><p>State Machine</p></td>
+<td><p>PlasmidSeq-State-Machine</p></td>
+<td><p>arn:aws:states:us-east-1:409124030547:stateMachine:PlasmidSeq-State-Machine</p></td>
+</tr>
+<tr class="row-odd"><td><p>RDS</p></td>
+<td><p>foundry-datastore</p></td>
+<td><p>arn:aws:rds:us-east-1:409124030547:db:foundry-datastore</p></td>
+</tr>
+<tr class="row-even"><td><p>S3 Bucket</p></td>
+<td><p>foundry-plasmid-seq</p></td>
+<td><p>arn:aws:s3:::foundry-plasmid-seq</p></td>
+</tr>
+<tr class="row-odd"><td><p>ECR</p></td>
+<td><p>foundry-plasmidseq</p></td>
+<td><p>arn:aws:ecr:us-east-1:409124030547:repository/foundry-plasmidseq</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="workflow">
+<h2>Workflow<a class="headerlink" href="#workflow" title="Link to this heading"></a></h2>
+<pre  class="mermaid">
+        sequenceDiagram
+    actor user as User
+    participant rt as Retool
+    participant bs as BaseSpace
+    participant sf as Step Fuction
+    participant rds as RDS
+    participant api as API Gateway
+    participant lambda as Lambda
+    participant s3 as S3 Bucket
+    participant lg as LabGuru
+
+    user-&gt;&gt;+rt: Select an NGS run
+    rt&lt;&lt;-&gt;&gt;bs: Query Analyses
+    rt-&gt;&gt;user: Display options
+    user-&gt;&gt;rt: Select an Analysis
+    rt-&gt;&gt;user: Display options
+    user-&gt;&gt;rt: Select Samples
+    rt-&gt;&gt;rds: Add samples
+    user-&gt;&gt;rt: Select PlasmidSeq Run
+    rt-&gt;&gt;-api: POST /start
+    api-&gt;&gt;+sf: start
+    sf-&gt;&gt;api: POST /start_experiment
+    api-&gt;&gt;lambda: start_expt()
+    lambda&lt;&lt;-&gt;&gt;rds: get samples
+    lambda-&gt;&gt;api: return samples
+    api-&gt;&gt;sf: return samples
+    loop SetupMap
+        sf-&gt;&gt;api: POST /setup
+        lambda&lt;&lt;-&gt;&gt;bs: get FASTQ files
+        lambda&lt;&lt;-&gt;&gt;lg: get template GenBank
+        lambda-&gt;&gt;s3: save sequences
+        lambda-&gt;&gt;rds: update sample status
+        lambda-&gt;&gt;api: return sample
+        api-&gt;&gt;sf: return samples
+    end
+    loop Map
+        sf-&gt;&gt;api: POST /trim
+        api-&gt;&gt;lambda: trim()
+        lambda&lt;&lt;-&gt;&gt;s3: get FASTQs
+        note over lambda: trim FASTQs
+        lambda-&gt;&gt;s3: save sequences
+        lambda-&gt;&gt;rds: update sample status
+        lambda-&gt;&gt;api: return sample
+        api-&gt;&gt;sf: return samples
+        par Assemble Sequences
+            sf-&gt;&gt;lambda: assemble()
+            note over lambda: Assemble Reads
+            lambda-&gt;&gt;s3: save sequences
+            lambda-&gt;&gt;rds: add assemblies
+            lambda-&gt;&gt;rds: update sample status
+            lambda-&gt;&gt;api: return assemblies
+            api-&gt;&gt;sf: return assemblies
+        and Check Assembly Status
+            loop
+                sf-&gt;&gt;api: POST /check_transition
+                api&lt;&lt;-&gt;&gt;rds: check sample status
+            end
+        end
+        sf-&gt;&gt;api: POST /make_plasmids
+        api-&gt;&gt;lambda: construct_plasmids()
+        note over lambda: Build plasmids from assembly paths
+        lambda-&gt;&gt;s3: save sequences
+        lambda-&gt;&gt;rds: update sample status
+        lambda-&gt;&gt;api: return assemblies
+        api-&gt;&gt;sf: return assemblies
+        loop
+            sf-&gt;&gt;api: POST /transfer_annotations
+            api-&gt;&gt;lambda: transfer_annotations()
+            note over lambda: align assembly to template
+            note over lambda: copy annotations
+            note over lambda: determine mutations
+            lambda-&gt;&gt;s3: save sequences
+            lambda-&gt;&gt;rds: add polymorphisms and features
+            lambda-&gt;&gt;rds: update sample status
+            lambda-&gt;&gt;api: return assemblies
+            api-&gt;&gt;sf: return assemblies
+        end
+    end
+    sf-&gt;&gt;lambda: combine()
+    lambda&lt;&lt;-&gt;&gt;rds: get sample/assembly details
+    note over lambda: complile data to XLSX
+    lambda&lt;&lt;-&gt;&gt;s3: get assembly GenBanks
+    note over lambda: zip data and sequences
+    lambda-&gt;&gt;s3: save zip file
+    lambda-&gt;&gt;sf: return samples
+    deactivate sf
+    user&lt;&lt;-&gt;&gt;+rt: check status
+    user-&gt;&gt;rt: request data
+    rt-&gt;&gt;-api: GET /zipfile
+    api-&gt;&gt;user: download results
+    </pre></section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="python/pydantic.html" class="btn btn-neutral float-left" title="Pydantic Models" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Rob Warden-Rothman.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

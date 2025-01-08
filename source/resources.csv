@@ -1,0 +1,7 @@
+Type,Name,ARN
+Lambda,plasmid-seq-processing,arn:aws:lambda:us-east-1:409124030547:function:plasmid-seq-processing
+API Gateway,plasmid-seq,arn:aws:apigateway:us-east-1::/restapis/vs0zqwkv7f
+State Machine,PlasmidSeq-State-Machine,arn:aws:states:us-east-1:409124030547:stateMachine:PlasmidSeq-State-Machine
+RDS,foundry-datastore,arn:aws:rds:us-east-1:409124030547:db:foundry-datastore
+S3 Bucket,foundry-plasmid-seq,arn:aws:s3:::foundry-plasmid-seq
+ECR,foundry-plasmidseq,arn:aws:ecr:us-east-1:409124030547:repository/foundry-plasmidseq

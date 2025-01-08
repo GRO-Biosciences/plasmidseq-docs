@@ -14,6 +14,7 @@ author = 'Rob Warden-Rothman'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
+    'sphinxcontrib.mermaid',
     'sphinx.ext.autodoc',
     'sphinx.ext.doctest',
     'sphinx.ext.intersphinx',
@@ -60,4 +61,20 @@ html_static_path = ['_static']
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path('../AppContainer/app', 'src').resolve()))
+sys.path.insert(0, str(Path('..', '..', 'AppContainer', 'app').resolve().absolute()))
+# print(sys.path)
+
+
+from sphinxcontrib import mermaid
+MERMAID_INJECTION = """
+var loader_info = {{name: 'logos', loader: () => fetch('https://unpkg.com/@iconify-json/logos@1/icons.json').then((res) => res.json())}}
+mermaid.registerIconPacks([loader_info]);
+
+"""
+
+for cur_var in ['_MERMAID_RUN_NO_D3_ZOOM', '_MERMAID_RUN_D3_ZOOM']:
+    blank_line, import_line, *remainder = getattr(mermaid, cur_var).splitlines(keepends=True)
+    new_val = ''.join([blank_line, import_line, MERMAID_INJECTION, *remainder])
+    # new_val = ''.join([blank_line, import_line, *remainder, MERMAID_INJECTION])
+    print(new_val)
+    setattr(mermaid, cur_var, new_val)

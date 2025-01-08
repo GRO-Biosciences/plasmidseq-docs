@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PlasmidSeq Analysis Pipeline documentation &mdash; PlasmidSeq Analysis Pipeline  documentation</title>
+  <title>Module Reference &mdash; PlasmidSeq Analysis Pipeline  documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
@@ -22,7 +22,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Troubleshooting" href="troubleshooting.html" /> 
+    <link rel="next" title="Pydantic Models" href="python/pydantic.html" />
+    <link rel="prev" title="PlasmidSeq Database" href="troubleshooting/database.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -33,7 +34,7 @@
 
           
           
-          <a href="#" class="icon icon-home">
+          <a href="index.html" class="icon icon-home">
             PlasmidSeq Analysis Pipeline
           </a>
 <div role="search">
@@ -45,10 +46,14 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python.html">Module Reference</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Module Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python/pydantic.html">Pydantic Models</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="aws.html">AWS Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="aws.html#overview">Overview</a></li>
 </ul>
 
         </div>
@@ -57,17 +62,17 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">PlasmidSeq Analysis Pipeline</a>
+          <a href="index.html">PlasmidSeq Analysis Pipeline</a>
       </nav>
 
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">PlasmidSeq Analysis Pipeline documentation</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Module Reference</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/python.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -75,23 +80,19 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="plasmidseq-analysis-pipeline-documentation">
-<h1>PlasmidSeq Analysis Pipeline documentation<a class="headerlink" href="#plasmidseq-analysis-pipeline-documentation" title="Link to this heading"></a></h1>
+  <section id="module-reference">
+<h1>Module Reference<a class="headerlink" href="#module-reference" title="Link to this heading"></a></h1>
 <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="troubleshooting/database.html">PlasmidSeq Database</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="python.html">Module Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="python/pydantic.html">Pydantic Models</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="aws.html">AWS Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="aws.html#architecture">Architecture</a></li>
-<li class="toctree-l2"><a class="reference internal" href="aws.html#resource-arns">Resource ARNs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="aws.html#workflow">Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/pydantic.html">Pydantic Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python/pydantic.html#db_model.LambdaMixin"><code class="docutils literal notranslate"><span class="pre">LambdaMixin</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/pydantic.html#db_model.PlasmidSeqRun"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqRun</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/pydantic.html#db_model.PlasmidSeqAssembly"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqAssembly</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/pydantic.html#db_model.AssemblyFeature"><code class="docutils literal notranslate"><span class="pre">AssemblyFeature</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/pydantic.html#db_model.AssemblyPolymorphism"><code class="docutils literal notranslate"><span class="pre">AssemblyPolymorphism</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/pydantic.html#db_model.MapStatusInfo"><code class="docutils literal notranslate"><span class="pre">MapStatusInfo</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/pydantic.html#db_model.PlasmidSeqRunList"><code class="docutils literal notranslate"><span class="pre">PlasmidSeqRunList</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/pydantic.html#db_model.ExperimentStartModel"><code class="docutils literal notranslate"><span class="pre">ExperimentStartModel</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -102,7 +103,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="troubleshooting.html" class="btn btn-neutral float-right" title="Troubleshooting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="troubleshooting/database.html" class="btn btn-neutral float-left" title="PlasmidSeq Database" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="python/pydantic.html" class="btn btn-neutral float-right" title="Pydantic Models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
